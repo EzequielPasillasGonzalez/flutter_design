@@ -287,3 +287,95 @@ class _HeaderWavePainter extends CustomPainter {
     return true;
   }
 }
+
+class HeaderWaveGradient extends StatelessWidget {
+  const HeaderWaveGradient({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(painter: _HeaderWaveGradientPainter()),
+    );
+  }
+}
+
+class _HeaderWaveGradientPainter extends CustomPainter {
+  const _HeaderWaveGradientPainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Gradient gradiente = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [Color(0xff6D05E8), Color(0xffc012ff), Color(0xff6d05fa)],
+      stops: [0, 0.5, 1],
+    );
+
+    final Rect rect = Rect.fromCircle(center: Offset(150.0, 55), radius: 180);
+    // Lapiz
+    final lapiz = Paint()..shader = gradiente.createShader(rect);
+
+    // Propiedades
+    lapiz.color = Color(0xff615AAB);
+    lapiz.style = PaintingStyle.fill; // Rellena la figura
+    lapiz.strokeWidth = 20;
+
+    final path = Path();
+
+    // Dibujar con el path y el lapiz
+    path.lineTo(0, size.height * 0.30);
+    // El punto de las primeras coordenadas indican el inicio de la curvatura
+    //  Las ultimas dos coordenadas apuntan a donde quiere llegar la linea
+    // path.lineTo(size.width * .5, size.height * 0.35);
+
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.40,
+      size.width * 0.50,
+      size.height * 0.30,
+    );
+
+    path.quadraticBezierTo(
+      size.width * 0.70,
+      size.height * 0.20,
+      size.width,
+      size.height * 0.30,
+    );
+
+    path.lineTo(size.width, 0);
+
+    canvas.drawPath(path, lapiz);
+
+    lapiz.color = Color(0xff615AAB);
+    lapiz.style = PaintingStyle.fill; // Rellena la figura
+
+    path.moveTo(0, size.height);
+
+    path.lineTo(0, size.height * 0.70);
+
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.80,
+      size.width * 0.50,
+      size.height * 0.60,
+    );
+
+    path.quadraticBezierTo(
+      size.width * .80,
+      size.height * 0.4,
+      size.width,
+      size.height * 0.60,
+    );
+
+    path.lineTo(size.width, size.height);
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
