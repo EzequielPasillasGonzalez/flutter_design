@@ -203,3 +203,87 @@ class _HeaderCurvoPainter extends CustomPainter {
     return true;
   }
 }
+
+class HeaderWave extends StatelessWidget {
+  const HeaderWave({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: CustomPaint(painter: _HeaderWavePainter()),
+    );
+  }
+}
+
+class _HeaderWavePainter extends CustomPainter {
+  const _HeaderWavePainter();
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Lapiz
+    final lapiz = Paint();
+
+    // Propiedades
+    lapiz.color = Color(0xff615AAB);
+    lapiz.style = PaintingStyle.fill; // Rellena la figura
+    lapiz.strokeWidth = 20;
+
+    final path = Path();
+
+    // Dibujar con el path y el lapiz
+    path.lineTo(0, size.height * 0.30);
+    // El punto de las primeras coordenadas indican el inicio de la curvatura
+    //  Las ultimas dos coordenadas apuntan a donde quiere llegar la linea
+    // path.lineTo(size.width * .5, size.height * 0.35);
+
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.40,
+      size.width * 0.50,
+      size.height * 0.30,
+    );
+
+    path.quadraticBezierTo(
+      size.width * 0.70,
+      size.height * 0.20,
+      size.width,
+      size.height * 0.30,
+    );
+
+    path.lineTo(size.width, 0);
+
+    canvas.drawPath(path, lapiz);
+
+    lapiz.color = Color(0xff615AAB);
+    lapiz.style = PaintingStyle.fill; // Rellena la figura
+
+    path.moveTo(0, size.height);
+
+    path.lineTo(0, size.height * 0.70);
+
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.80,
+      size.width * 0.50,
+      size.height * 0.60,
+    );
+
+    path.quadraticBezierTo(
+      size.width * .80,
+      size.height * 0.4,
+      size.width,
+      size.height * 0.60,
+    );
+
+    path.lineTo(size.width, size.height);
+
+    canvas.drawPath(path, lapiz);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
+}
