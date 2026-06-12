@@ -20,6 +20,10 @@ class CuadradoAnimado extends StatefulWidget {
 class _CuadradoAnimadoState extends State<CuadradoAnimado>
     with SingleTickerProviderStateMixin {
   late Animation<double> rotation;
+  late Animation<double> opacidad;
+  late Animation<double> opacidadOut;
+  late Animation<double> moverDerecha;
+  late Animation<double> agrandar;
   late AnimationController controller;
 
   @override
@@ -29,15 +33,43 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
       duration: const Duration(milliseconds: 4000),
     );
 
-    rotation = Tween(begin: 0.0, end: 2.0 * Math.pi).animate(controller);
+    rotation = Tween(
+      begin: 0.0,
+      end: 2.0 * Math.pi,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
 
-    controller.addListener(() {
-      if (controller.status == AnimationStatus.completed) {
-        controller.reverse();
-      } else if (controller.status == AnimationStatus.dismissed) {
-        controller.forward();
-      }
-    });
+    opacidad = Tween(begin: 0.1, end: 1.0).animate(
+      CurvedAnimation(
+        parent: controller,
+        // Interval es en base a porcentajes, del tiempo del controlador en este caso 4 segundos
+        curve: Interval(0, 0.25, curve: Curves.easeOut),
+      ),
+    );
+
+    opacidadOut = Tween(begin: 0.1, end: 1.0).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Interval(0.75, 1.0, curve: Curves.easeOut),
+      ),
+    );
+
+    moverDerecha = Tween(
+      begin: 0.0,
+      end: 200.0,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
+
+    agrandar = Tween(
+      begin: 0.0,
+      end: 2.0,
+    ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
+
+    // controller.addListener(() {
+    //   if (controller.status == AnimationStatus.completed) {
+    //     controller.reset();
+    //     // } else if (controller.status == AnimationStatus.dismissed) {
+    //     //   controller.forward();
+    //   }
+    // });
     super.initState();
   }
 
@@ -49,14 +81,22 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
 
   @override
   Widget build(BuildContext context) {
-    // Play
     controller.forward();
 
     return AnimatedBuilder(
       animation: controller,
       child: _Cuadrado(),
       builder: (BuildContext context, Widget? child) {
-        return Transform.rotate(angle: rotation.value, child: child);
+        return Transform.translate(
+          offset: Offset(moverDerecha.value, 0),
+          child: Transform.rotate(
+            angle: rotation.value,
+            child: Opacity(
+              opacity: opacidad.value - opacidadOut.value,
+              child: Transform.scale(scale: agrandar.value, child: child),
+            ),
+          ),
+        );
       },
     );
   }
