@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design/src/pages/slideshow_page.dart';
+// import 'package:flutter_design/src/labs/slideshow_page.dart';
 // import 'package:flutter_design/src/pages/graficas_circulares_page.dart';
 
 // import 'package:flutter_design/src/pages/animation_pages.dart';
