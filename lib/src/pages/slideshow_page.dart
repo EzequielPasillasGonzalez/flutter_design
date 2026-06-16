@@ -10,7 +10,8 @@ class SlideshowPage extends StatelessWidget {
     return Scaffold(
       body: Slideshow(
         puntosArriba: true,
-        colorPrimario: Colors.amber,
+        colorPrimario: Colors.deepOrangeAccent,
+        bulletPrimario: 24,
         slides: [
           SvgPicture.asset('assets/svgs/slide-1.svg'),
           SvgPicture.asset('assets/svgs/slide-2.svg'),
