@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FloatingNavigationBarButton {
   final VoidCallback onPressed;
@@ -23,6 +24,7 @@ class FloatingNavigationBar extends StatelessWidget {
       },
       icon: Icons.call,
     ),
+
     FloatingNavigationBarButton(
       onPressed: () {
         debugPrint('Icons.notification_add');
@@ -39,7 +41,8 @@ class FloatingNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return ChangeNotifierProvider(
+      create: (_) => _MenuModel(),
       child: _MenuBackground(child: _MenuItems(menuItems: items)),
     );
   }
@@ -53,7 +56,7 @@ class _MenuBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250,
+      width: 320,
       height: 60,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -91,10 +94,35 @@ class _MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int itemSeleccionado = Provider.of<_MenuModel>(
+      context,
+    ).itemSeleccionado;
+
+    final bool isSeleccionado = (itemSeleccionado == index);
+
     return GestureDetector(
-      onTap: item.onPressed,
+      onTap: () {
+        Provider.of<_MenuModel>(context, listen: false).itemSeleccionado =
+            index;
+        item.onPressed();
+      },
       behavior: HitTestBehavior.translucent,
-      child: Icon(item.icon, size: 25, color: Colors.blueGrey),
+      child: Icon(
+        item.icon,
+        size: isSeleccionado ? 30 : 25,
+        color: isSeleccionado ? Colors.black : Colors.blueGrey,
+      ),
     );
+  }
+}
+
+class _MenuModel with ChangeNotifier {
+  int _itemSeleccionado = 0;
+
+  int get itemSeleccionado => _itemSeleccionado;
+
+  set itemSeleccionado(int index) {
+    _itemSeleccionado = index;
+    notifyListeners();
   }
 }

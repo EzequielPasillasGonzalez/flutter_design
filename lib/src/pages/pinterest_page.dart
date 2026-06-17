@@ -7,9 +7,29 @@ class PinterestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: _PinterestGrid()),
-      bottomNavigationBar: FloatingNavigationBar(),
+    return SafeArea(
+      child: Scaffold(
+        // body: Center(child: _PinterestGrid()),
+        // bottomNavigationBar: FloatingNavigationBar(),
+        body: Stack(children: [_PinterestGrid(), _MenuLocation()]),
+      ),
+    );
+  }
+}
+
+class _MenuLocation extends StatelessWidget {
+  const _MenuLocation();
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Positioned(
+      bottom: 30,
+      child: SizedBox(
+        width: screenSize.width,
+        child: Align(child: FloatingNavigationBar()),
+      ),
     );
   }
 }
