@@ -9,37 +9,14 @@ class FloatingNavigationBarButton {
 }
 
 class FloatingNavigationBar extends StatelessWidget {
-  FloatingNavigationBar({super.key, this.show = true});
+  const FloatingNavigationBar({
+    super.key,
+    this.show = true,
+    required this.items,
+  });
 
   final bool show;
-
-  final List<FloatingNavigationBarButton> items = [
-    FloatingNavigationBarButton(
-      onPressed: () {
-        debugPrint('Icons.pie_chart_outline');
-      },
-      icon: Icons.pie_chart_outline,
-    ),
-    FloatingNavigationBarButton(
-      onPressed: () {
-        debugPrint('Icons.call');
-      },
-      icon: Icons.call,
-    ),
-
-    FloatingNavigationBarButton(
-      onPressed: () {
-        debugPrint('Icons.notification_add');
-      },
-      icon: Icons.notification_add,
-    ),
-    FloatingNavigationBarButton(
-      onPressed: () {
-        debugPrint('Icons.no_meals');
-      },
-      icon: Icons.no_meals,
-    ),
-  ];
+  final List<FloatingNavigationBarButton> items;
 
   @override
   Widget build(BuildContext context) {

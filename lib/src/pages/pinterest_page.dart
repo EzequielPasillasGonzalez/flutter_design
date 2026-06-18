@@ -33,7 +33,38 @@ class _MenuLocation extends StatelessWidget {
       bottom: 30,
       child: SizedBox(
         width: screenSize.width,
-        child: Align(child: FloatingNavigationBar(show: show)),
+        child: Align(
+          child: FloatingNavigationBar(
+            show: show,
+            items: [
+              FloatingNavigationBarButton(
+                onPressed: () {
+                  debugPrint('Icons.pie_chart_outline');
+                },
+                icon: Icons.pie_chart_outline,
+              ),
+              FloatingNavigationBarButton(
+                onPressed: () {
+                  debugPrint('Icons.call');
+                },
+                icon: Icons.call,
+              ),
+
+              FloatingNavigationBarButton(
+                onPressed: () {
+                  debugPrint('Icons.notification_add');
+                },
+                icon: Icons.notification_add,
+              ),
+              FloatingNavigationBarButton(
+                onPressed: () {
+                  debugPrint('Icons.no_meals');
+                },
+                icon: Icons.no_meals,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
