@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_design/src/widgets/button.dart';
 import 'package:flutter_design/src/widgets/headers_widgets.dart';
@@ -92,12 +93,15 @@ class EmergencyPage extends StatelessWidget {
 
   late final List<Widget> itemMap = items
       .map(
-        (e) => Button(
-          icon: e.icon,
-          onPress: () {},
-          title: e.texto,
-          color1: e.color1,
-          color2: e.color1,
+        (e) => FadeInLeft(
+          duration: const Duration(milliseconds: 250),
+          child: Button(
+            icon: e.icon,
+            onPress: () {},
+            title: e.texto,
+            color1: e.color1,
+            color2: e.color1,
+          ),
         ),
       )
       .toList();
