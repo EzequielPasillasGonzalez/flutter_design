@@ -8,7 +8,17 @@ class EmergencyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Button()));
+    return Scaffold(
+      body: Center(
+        child: Button(
+          icon: FontAwesomeIcons.carBurst,
+          onPress: () {},
+          title: 'Motor Accident',
+          color1: Color(0xff6989f5),
+          color2: Color(0xff906ef5),
+        ),
+      ),
+    );
   }
 }
 
