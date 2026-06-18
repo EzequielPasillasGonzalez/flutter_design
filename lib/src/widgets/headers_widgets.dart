@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HeaderCuadrado extends StatelessWidget {
   const HeaderCuadrado({super.key});
@@ -377,5 +378,106 @@ class _HeaderWaveGradientPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+}
+
+class IconHeader extends StatelessWidget {
+  const IconHeader({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.subTitle,
+    this.color1 = Colors.blueGrey,
+    this.color2 = Colors.grey,
+  });
+
+  final FaIconData icon;
+  final String title;
+  final String subTitle;
+  final Color color1;
+  final Color color2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _IconHeaderBackground(color1: color1, color2: color2),
+        _IconHeaderTopLeft(icon: icon),
+        _IconHeaderTitle(icon: icon, title: title, subTitle: subTitle),
+      ],
+    );
+  }
+}
+
+class _IconHeaderTitle extends StatelessWidget {
+  _IconHeaderTitle({
+    required this.icon,
+    required this.title,
+    required this.subTitle,
+  });
+
+  final Color colorBlanco = Colors.white.withValues(alpha: 0.7);
+  final FaIconData icon;
+  final String title;
+  final String subTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 80, width: double.infinity),
+        Text(title, style: TextStyle(fontSize: 20, color: colorBlanco)),
+        SizedBox(height: 20),
+        Text(
+          subTitle,
+          style: TextStyle(
+            fontSize: 25,
+            color: colorBlanco,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 20),
+        FaIcon(icon, size: 80, color: Colors.white),
+      ],
+    );
+  }
+}
+
+class _IconHeaderTopLeft extends StatelessWidget {
+  const _IconHeaderTopLeft({required this.icon});
+  final FaIconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: -50,
+      left: -70,
+      child: FaIcon(
+        icon,
+        size: 250,
+        color: Colors.white.withValues(alpha: 0.2),
+      ),
+    );
+  }
+}
+
+class _IconHeaderBackground extends StatelessWidget {
+  const _IconHeaderBackground({required this.color1, required this.color2});
+  final Color color1;
+  final Color color2;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(80)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[color1, color2],
+        ),
+      ),
+    );
   }
 }
