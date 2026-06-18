@@ -19,26 +19,29 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _ButtonBackground(color1: color1, color2: color2, icon: icon),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 140, width: 40),
-            FaIcon(icon, size: 40, color: Colors.white),
-            SizedBox(width: 20),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(color: Colors.white, fontSize: 18),
+    return GestureDetector(
+      onTap: onPress,
+      child: Stack(
+        children: [
+          _ButtonBackground(color1: color1, color2: color2, icon: icon),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 140, width: 40),
+              FaIcon(icon, size: 40, color: Colors.white),
+              SizedBox(width: 20),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
               ),
-            ),
-            FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
-            SizedBox(width: 40),
-          ],
-        ),
-      ],
+              FaIcon(FontAwesomeIcons.chevronRight, color: Colors.white),
+              SizedBox(width: 40),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
