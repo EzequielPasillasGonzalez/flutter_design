@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design/src/widgets/floating_navigation_bar.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
 class PinterestPage extends StatelessWidget {
   const PinterestPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return ChangeNotifierProvider(
+      create: (_) => _MenuModel(),
       child: Scaffold(
         // body: Center(child: _PinterestGrid()),
         // bottomNavigationBar: FloatingNavigationBar(),
-        body: Stack(children: [_PinterestGrid(), _MenuLocation()]),
+        body: SafeArea(
+          child: Stack(children: [_PinterestGrid(), _MenuLocation()]),
+        ),
       ),
     );
   }
@@ -23,27 +27,56 @@ class _MenuLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
+    final bool show = Provider.of<_MenuModel>(context).mostrar;
 
     return Positioned(
       bottom: 30,
       child: SizedBox(
         width: screenSize.width,
-        child: Align(child: FloatingNavigationBar()),
+        child: Align(child: FloatingNavigationBar(show: show)),
       ),
     );
   }
 }
 
-class _PinterestGrid extends StatelessWidget {
-  _PinterestGrid();
+class _PinterestGrid extends StatefulWidget {
+  const _PinterestGrid();
 
+  @override
+  State<_PinterestGrid> createState() => _PinterestGridState();
+}
+
+class _PinterestGridState extends State<_PinterestGrid> {
   final List<int> items = List.generate(200, (index) => index);
+  final ScrollController scrollController = ScrollController();
+
+  double scrollAnterior = 0;
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      if (scrollController.offset > scrollAnterior) {
+        Provider.of<_MenuModel>(context, listen: false).mostrar = false;
+      } else {
+        Provider.of<_MenuModel>(context, listen: false).mostrar = true;
+      }
+
+      scrollAnterior = scrollController.offset;
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       itemCount: items.length,
-
+      controller: scrollController,
       itemBuilder: (context, index) => _PinteresItem(index: index),
       gridDelegate: SliverWovenGridDelegate.count(
         crossAxisCount: 2,
@@ -103,5 +136,16 @@ class _PinteresItem extends StatelessWidget {
         Container(height: bottomSpace, color: Colors.green),
       ],
     );
+  }
+}
+
+class _MenuModel with ChangeNotifier {
+  bool _mostrar = true;
+
+  bool get mostrar => _mostrar;
+
+  set mostrar(bool value) {
+    _mostrar = value;
+    notifyListeners();
   }
 }

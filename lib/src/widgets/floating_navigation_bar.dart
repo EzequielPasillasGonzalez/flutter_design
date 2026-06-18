@@ -9,7 +9,9 @@ class FloatingNavigationBarButton {
 }
 
 class FloatingNavigationBar extends StatelessWidget {
-  FloatingNavigationBar({super.key});
+  FloatingNavigationBar({super.key, this.show = true});
+
+  final bool show;
 
   final List<FloatingNavigationBarButton> items = [
     FloatingNavigationBarButton(
@@ -41,9 +43,14 @@ class FloatingNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('$show');
     return ChangeNotifierProvider(
       create: (_) => _MenuModel(),
-      child: _MenuBackground(child: _MenuItems(menuItems: items)),
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 250),
+        opacity: show ? 1 : 0,
+        child: _MenuBackground(child: _MenuItems(menuItems: items)),
+      ),
     );
   }
 }
