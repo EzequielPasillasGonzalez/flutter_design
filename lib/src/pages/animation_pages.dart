@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as Math;
+import 'dart:math' as math;
 
 class AnimationPages extends StatelessWidget {
   const AnimationPages({super.key});
@@ -35,7 +35,7 @@ class _CuadradoAnimadoState extends State<CuadradoAnimado>
 
     rotation = Tween(
       begin: 0.0,
-      end: 2.0 * Math.pi,
+      end: 2.0 * math.pi,
     ).animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
 
     opacidad = Tween(begin: 0.1, end: 1.0).animate(

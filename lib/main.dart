@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_design/src/pages/emergency_page.dart';
-import 'package:flutter_design/src/pages/slider_list_page.dart';
-// import 'package:flutter_design/src/pages/pinterest_page.dart';
-// import 'package:flutter_design/src/labs/slideshow_page.dart';
-// import 'package:flutter_design/src/pages/graficas_circulares_page.dart';
-// import 'package:flutter_design/src/pages/animation_pages.dart';
-// import 'package:flutter_design/src/retos/square_animate_page.dart';
-// import 'package:flutter_design/src/pages/headers_page.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_design/src/pages/launcher_page.dart';
+import 'package:flutter_design/src/themes/theme_changer.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeChanger(1),
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -17,10 +18,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Provider.of<ThemeChanger>(context).currentTheme;
     return MaterialApp(
+      theme: appTheme,
       debugShowCheckedModeBanner: false,
       title: 'Diseños App',
-      home: SliderListPage(),
+      home: LauncherPage(),
     );
   }
 }
